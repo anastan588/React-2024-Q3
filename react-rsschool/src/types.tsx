@@ -6,6 +6,7 @@ export interface Pokemon {
 export interface SearchState {
   searchTerm: string;
   pokemonList: Pokemon[];
+  loading: boolean;
 }
 
 export interface PokemonListResponse {

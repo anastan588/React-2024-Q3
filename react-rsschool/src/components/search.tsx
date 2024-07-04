@@ -10,13 +10,14 @@ export class SearchComponent extends Component<object, SearchState> {
     this.state = {
       searchTerm: localStorage.getItem('searchTerm') || '',
       pokemonList: [],
+      loading: false,
     };
     this.filteredPokemonList = [];
     this.api = new Api();
   }
 
   async componentDidMount() {
-    console.log(this.state.searchTerm);
+    this.setState({ loading: true }); 
     await this.api
       .fetchPokemonList(this.state)
       .then((response) => {
@@ -60,6 +61,9 @@ export class SearchComponent extends Component<object, SearchState> {
           />
           <button onClick={this.handleSearch}>Search</button>
         </div>
+        {this.state.loading ? (
+        <div className="loader">Loading...</div>
+      ) : (
         <div className="pokemon-list">
           {this.filteredPokemonList.map((pokemon) => (
             <div key={pokemon.name} className="pokemon-item">
@@ -68,6 +72,7 @@ export class SearchComponent extends Component<object, SearchState> {
             </div>
           ))}
         </div>
+      )}
       </div>
     );
   }

@@ -24,7 +24,8 @@ export class Api {
       .then((data: PokemonListResponse) => {
         console.log(data);
         localStorage.setItem('searchTerm', searchState.searchTerm);
-         searchState.pokemonList = data.results;
+        searchState.pokemonList = data.results;
+        searchState.loading = false;
         localStorage.setItem('Pokemons', JSON.stringify(data.results));
         return searchState;
       })
