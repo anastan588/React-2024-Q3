@@ -36,13 +36,9 @@ export class SearchComponent extends Component<object, SearchState> {
       .fetchPokemonList(this.state)
       .then((response) => {
         this.state = response;
-        console.log(this.state);
         this.setState(this.state);
-        console.log(this.state.pokemonList);
-        console.log(this.state.pokemonDetails);
         this.filteredPokemonList = this.state.pokemonDetails.filter(
           (pokemon) => {
-            console.log(pokemon);
             return pokemon.name
               .toLowerCase()
               .includes(this.state.searchTerm.toLowerCase());

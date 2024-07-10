@@ -102,3 +102,8 @@ export interface PokemonListResponse {
   previous: string;
   results: Pokemon[];
 }
+
+
+export interface ErrorBoundaryState {
+  hasError: boolean;
+}

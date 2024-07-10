@@ -19,7 +19,6 @@ export class Api {
         return responseResult;
       })
       .then((data: PokemonListResponse) => {
-        console.log(data);
         localStorage.setItem('searchTerm', searchState.searchTerm);
         searchState.pokemonList = data.results;
         searchState.pokemonDetails = [];
@@ -29,7 +28,6 @@ export class Api {
       .catch((error) => {
         console.error('Error:', error);
       });
-    console.log(searchState);
     for (const pokemon of searchState.pokemonList) {
       try {
         const pokemonData: PokemonDescription = await fetch(pokemon.url).then(

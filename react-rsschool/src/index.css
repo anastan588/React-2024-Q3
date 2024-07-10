@@ -116,6 +116,7 @@ h6 {
   gap: 30px;
   height: 100%;
   position: relative;
+  min-height: 100vh;
 }
 
 .header {
@@ -201,4 +202,43 @@ h6 {
 
 .github {
   color: white;
+}
+
+.error-button {
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  background-color: #ffd4f1;
+}
+
+.error-button:hover {
+  transform: scale(1.2);
+  transition: transform 0.2s ease-in-out;
+}
+
+
+.error-title {
+  font-weight: bold;
+  font-size: 200%;
+}
+.return-button {
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  background-color: #ffd4f1;
+}
+
+.return-button:hover {
+  transform: scale(1.2);
+  transition: transform 0.2s ease-in-out;
+}
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 40px;
+  background-color: rgba(230, 26, 26, 0.4);
+  height: 100vh;
 }
