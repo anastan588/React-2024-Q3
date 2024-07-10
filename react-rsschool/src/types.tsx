@@ -103,7 +103,6 @@ export interface PokemonListResponse {
   results: Pokemon[];
 }
 
-
 export interface ErrorBoundaryState {
   hasError: boolean;
 }
