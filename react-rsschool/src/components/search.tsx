@@ -68,38 +68,44 @@ export class SearchComponent extends Component<object, SearchState> {
         {this.state.loading ? (
           <div className="loader">Loading...</div>
         ) : (
-          <div className="pokemon-list">
-            {this.filteredPokemonList.map((pokemon) => (
-              <div key={pokemon.id} className="pokemon-item">
-                <img
-                  className="pokemon-image"
-                  src={`${pokemon.sprites.back_default}`}
-                  alt="pokemon"
-                ></img>
-                <div className="pokemon-description">
-                  <h3 className="pokemon-name">
-                    {pokemon.name.toLocaleUpperCase()}
-                  </h3>
-                  <p className="pokemon-description-item">
-                    <span className="bold">Height:</span> {pokemon.height}
-                  </p>
-                  <p className="pokemon-description-item">
-                    <span className="bold">Weight:</span> {pokemon.weight}
-                  </p>
-                  <p className="pokemon-description-item">
-                    <span className="bold">Base experience:</span>{' '}
-                    {pokemon.base_experience}
-                  </p>
-                  <p className="pokemon-description-item">
-                    <span className="bold">Abilities:</span>
-                    {pokemon.abilities.map((ability) => (
-                      <span> {ability.ability.name} </span>
-                    ))}
-                  </p>
+          <>
+            <div className="pagination-container">
+              <button className="pagination-button">Prev page</button>
+              <button className="pagination-button">Next page</button>
+            </div>
+            <div className="pokemon-list">
+              {this.filteredPokemonList.map((pokemon) => (
+                <div key={pokemon.id} className="pokemon-item">
+                  <img
+                    className="pokemon-image"
+                    src={`${pokemon.sprites.back_default}`}
+                    alt="pokemon"
+                  ></img>
+                  <div className="pokemon-description">
+                    <h3 className="pokemon-name">
+                      {pokemon.name.toLocaleUpperCase()}
+                    </h3>
+                    <p className="pokemon-description-item">
+                      <span className="bold">Height:</span> {pokemon.height}
+                    </p>
+                    <p className="pokemon-description-item">
+                      <span className="bold">Weight:</span> {pokemon.weight}
+                    </p>
+                    <p className="pokemon-description-item">
+                      <span className="bold">Base experience:</span>{' '}
+                      {pokemon.base_experience}
+                    </p>
+                    <p className="pokemon-description-item">
+                      <span className="bold">Abilities:</span>
+                      {pokemon.abilities.map((ability) => (
+                        <span> {ability.ability.name} </span>
+                      ))}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </>
         )}
       </>
     );
