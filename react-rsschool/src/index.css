@@ -241,3 +241,19 @@ h6 {
   background-color: rgba(230, 26, 26, 0.4);
   height: 100vh;
 }
+
+.pagination-container {
+  display: flex;
+  gap: 15px;
+}
+.pagination-button {
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  background-color: #ffd4f1;
+}
+
+.pagination-button:hover {
+  transform: scale(1.2);
+  transition: transform 0.2s ease-in-out;
+}

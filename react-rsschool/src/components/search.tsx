@@ -1,113 +1,114 @@
-import { Component } from 'react';
-import { Api } from '../api/api';
+import { useEffect, useState } from 'react';
+import Api from '../api/api';
 import { PokemonDescription, SearchState } from '../types';
 
-export class SearchComponent extends Component<object, SearchState> {
-  api: Api;
-  filteredPokemonList: PokemonDescription[];
+function SearchComponent() {
+  const [state, setState] = useState<SearchState>({
+    searchTerm: '',
+    pokemonList: [],
+    loading: false,
+    pokemonDetails: [],
+  });
 
-  constructor(props: object) {
-    super(props);
-    this.state = {
-      searchTerm: localStorage.getItem('searchTerm') || '',
-      pokemonList: [],
-      loading: false,
-      pokemonDetails: [],
+  const [filteredPokemonList, setFilteredPokemonList] = useState<
+    PokemonDescription[]
+  >([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await requestForServer();
     };
-    this.filteredPokemonList = [];
-    this.api = new Api();
-  }
+    fetchData();
+  
+  }, []);
 
-  async componentDidMount() {
-    await this.requestForServer();
-  }
-
-  handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ searchTerm: event.target.value });
+  const handleSearchInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setState({ ...state, searchTerm: event.target.value });
   };
 
-  handleSearch = async () => {
-    await this.requestForServer();
+  const handleSearch = async () => {
+    await requestForServer();
   };
 
-  async requestForServer() {
-    this.setState({ loading: true });
-    await this.api
-      .fetchPokemonList(this.state)
-      .then((response) => {
-        this.state = response;
-        this.setState(this.state);
-        this.filteredPokemonList = this.state.pokemonDetails.filter(
-          (pokemon) => {
-            return pokemon.name
-              .toLowerCase()
-              .includes(this.state.searchTerm.toLowerCase());
-          },
+  async function requestForServer() {
+    setState({ ...state, loading: true });
+    try {
+      await Api(state).then((response) => {
+        setState(response);
+        setFilteredPokemonList(
+          response.pokemonDetails.filter((pokemon: PokemonDescription) =>
+            pokemon.name.toLowerCase().includes(state.searchTerm.toLowerCase()),
+          ),
         );
-      })
-      .catch((error) => {
-        console.error('Error:', error);
+        return response;
       });
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setState({ ...state, loading: false });
+    }
   }
 
-  render() {
-    return (
-      <>
-        <div className="search-container">
-          <input
-            className="search-input"
-            type="text"
-            value={this.state.searchTerm}
-            onChange={this.handleSearchInputChange}
-            placeholder="Search for Pokemon"
-          />
-          <button className="search-button" onClick={this.handleSearch}>
-            Search
-          </button>
-        </div>
-        {this.state.loading ? (
-          <div className="loader">Loading...</div>
-        ) : (
-          <>
-            <div className="pagination-container">
-              <button className="pagination-button">Prev page</button>
-              <button className="pagination-button">Next page</button>
-            </div>
-            <div className="pokemon-list">
-              {this.filteredPokemonList.map((pokemon) => (
-                <div key={pokemon.id} className="pokemon-item">
-                  <img
-                    className="pokemon-image"
-                    src={`${pokemon.sprites.back_default}`}
-                    alt="pokemon"
-                  ></img>
-                  <div className="pokemon-description">
-                    <h3 className="pokemon-name">
-                      {pokemon.name.toLocaleUpperCase()}
-                    </h3>
-                    <p className="pokemon-description-item">
-                      <span className="bold">Height:</span> {pokemon.height}
-                    </p>
-                    <p className="pokemon-description-item">
-                      <span className="bold">Weight:</span> {pokemon.weight}
-                    </p>
-                    <p className="pokemon-description-item">
-                      <span className="bold">Base experience:</span>{' '}
-                      {pokemon.base_experience}
-                    </p>
-                    <p className="pokemon-description-item">
-                      <span className="bold">Abilities:</span>
-                      {pokemon.abilities.map((ability) => (
-                        <span> {ability.ability.name} </span>
-                      ))}
-                    </p>
-                  </div>
+  return (
+    <>
+      <div className="search-container">
+        <input
+          className="search-input"
+          type="text"
+          value={state.searchTerm}
+          onChange={handleSearchInputChange}
+          placeholder="Search for Pokemon"
+        />
+        <button className="search-button" onClick={handleSearch}>
+          Search
+        </button>
+      </div>
+      {state.loading ? (
+        <div className="loader">Loading...</div>
+      ) : (
+        <>
+          <div className="pagination-container">
+            <button className="pagination-button">Prev page</button>
+            <button className="pagination-button">Next page</button>
+          </div>
+          <div className="pokemon-list">
+            {filteredPokemonList.map((pokemon) => (
+              <div key={pokemon.id} className="pokemon-item">
+                <img
+                  className="pokemon-image"
+                  src={`${pokemon.sprites.back_default}`}
+                  alt="pokemon"
+                ></img>
+                <div className="pokemon-description">
+                  <h3 className="pokemon-name">
+                    {pokemon.name.toLocaleUpperCase()}
+                  </h3>
+                  <p className="pokemon-description-item">
+                    <span className="bold">Height:</span> {pokemon.height}
+                  </p>
+                  <p className="pokemon-description-item">
+                    <span className="bold">Weight:</span> {pokemon.weight}
+                  </p>
+                  <p className="pokemon-description-item">
+                    <span className="bold">Base experience:</span>{' '}
+                    {pokemon.base_experience}
+                  </p>
+                  <p className="pokemon-description-item">
+                    <span className="bold">Abilities:</span>
+                    {pokemon.abilities.map((ability) => (
+                      <span> {ability.ability.name} </span>
+                    ))}
+                  </p>
                 </div>
-              ))}
-            </div>
-          </>
-        )}
-      </>
-    );
-  }
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </>
+  );
 }
+
+export default SearchComponent;
