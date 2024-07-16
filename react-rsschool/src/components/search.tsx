@@ -8,6 +8,7 @@ function SearchComponent() {
     pokemonList: [],
     loading: false,
     pokemonDetails: [],
+    pageNumber: 1,
   });
 
   const [filteredPokemonList, setFilteredPokemonList] = useState<
@@ -19,7 +20,6 @@ function SearchComponent() {
       await requestForServer();
     };
     fetchData();
-  
   }, []);
 
   const handleSearchInputChange = (
@@ -32,8 +32,16 @@ function SearchComponent() {
     await requestForServer();
   };
 
+  const handlePage = (pageNumber: number) => {
+    state.pageNumber = pageNumber;
+    setState({ ...state, pageNumber: pageNumber });
+    console.log(pageNumber);
+    requestForServer();
+  };
+
   async function requestForServer() {
     setState({ ...state, loading: true });
+    console.log(state.pageNumber);
     try {
       await Api(state).then((response) => {
         setState(response);
@@ -70,8 +78,8 @@ function SearchComponent() {
       ) : (
         <>
           <div className="pagination-container">
-            <button className="pagination-button">Prev page</button>
-            <button className="pagination-button">Next page</button>
+            <button className="pagination-button" onClick={() => handlePage(state.pageNumber - 1)}>Prev page</button>
+            <button className="pagination-button" onClick={() => handlePage(state.pageNumber + 1)}>Next page</button>
           </div>
           <div className="pokemon-list">
             {filteredPokemonList.map((pokemon) => (

@@ -94,6 +94,7 @@ export interface SearchState {
   pokemonList: Pokemon[];
   loading: boolean;
   pokemonDetails: PokemonDescription[];
+  pageNumber: number,
 }
 
 export interface PokemonListResponse {
@@ -106,4 +107,3 @@ export interface PokemonListResponse {
 export interface ErrorBoundaryState {
   hasError: boolean;
 }
-

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import './App.css';
 import SearchComponent from './components/search';
 
-function App () {
+function App() {
   const [state, setState] = useState({
     errorThrown: false,
   });
@@ -38,6 +38,6 @@ function App () {
       </footer>
     </div>
   );
-};
+}
 
 export default App;
