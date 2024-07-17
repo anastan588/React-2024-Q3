@@ -22,6 +22,7 @@ async function Api(searchState: SearchState) {
         (res) => res.json(),
       );
       searchState.pokemonDetails.push(pokemonData);
+      console.log(searchState.pokemonDetails);
     }
   } catch (error) {
     console.error('Error:', error);

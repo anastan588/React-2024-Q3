@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import Api from '../api/api';
 import { PokemonDescription, SearchState } from '../types';
+import PokemonListPage from './pokemosListPage';
+import { Outlet} from 'react-router-dom';
 
 function SearchComponent() {
   const [state, setState] = useState<SearchState>({
@@ -78,40 +80,24 @@ function SearchComponent() {
       ) : (
         <>
           <div className="pagination-container">
-            <button className="pagination-button" onClick={() => handlePage(state.pageNumber - 1)}>Prev page</button>
-            <button className="pagination-button" onClick={() => handlePage(state.pageNumber + 1)}>Next page</button>
+            <button
+              className="pagination-button"
+              onClick={() => handlePage(state.pageNumber - 1)}
+            >
+              Prev page
+            </button>
+            <button
+              className="pagination-button"
+              onClick={() => handlePage(state.pageNumber + 1)}
+            >
+              Next page
+            </button>
           </div>
-          <div className="pokemon-list">
-            {filteredPokemonList.map((pokemon) => (
-              <div key={pokemon.id} className="pokemon-item">
-                <img
-                  className="pokemon-image"
-                  src={`${pokemon.sprites.back_default}`}
-                  alt="pokemon"
-                ></img>
-                <div className="pokemon-description">
-                  <h3 className="pokemon-name">
-                    {pokemon.name.toLocaleUpperCase()}
-                  </h3>
-                  <p className="pokemon-description-item">
-                    <span className="bold">Height:</span> {pokemon.height}
-                  </p>
-                  <p className="pokemon-description-item">
-                    <span className="bold">Weight:</span> {pokemon.weight}
-                  </p>
-                  <p className="pokemon-description-item">
-                    <span className="bold">Base experience:</span>{' '}
-                    {pokemon.base_experience}
-                  </p>
-                  <p className="pokemon-description-item">
-                    <span className="bold">Abilities:</span>
-                    {pokemon.abilities.map((ability) => (
-                      <span> {ability.ability.name} </span>
-                    ))}
-                  </p>
-                </div>
-              </div>
-            ))}
+          <div className="pokemoms_container">
+            <PokemonListPage filteredPokemonList={filteredPokemonList} />
+            <div className="pokemon-detailed-page">
+              <Outlet />
+            </div>
           </div>
         </>
       )}
