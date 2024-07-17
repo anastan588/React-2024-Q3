@@ -6,6 +6,14 @@ async function Api(searchState: SearchState) {
       ? `https://pokeapi.co/api/v2/pokemon?limit=30&offset=${searchState.pageNumber}`
       : `https://pokeapi.co/api/v2/pokemon?search=${searchState.searchTerm}&limit=60&offset=${searchState.pageNumber}`;
 
+  const state: SearchState = {
+    searchTerm: searchState.searchTerm,
+    pokemonList: [],
+    loading: true,
+    pokemonDetails: [],
+    pageNumber: searchState.pageNumber,
+  };
+
   try {
     const response = await fetch(url, {
       headers: {
@@ -13,22 +21,22 @@ async function Api(searchState: SearchState) {
       },
     });
     await response.json().then((data) => {
-      searchState.pokemonList = data.results;
-      searchState.pokemonDetails = [];
-      searchState.loading = false;
+      localStorage.setItem('searchTerm', searchState.searchTerm);
+      state.pokemonList = data.results;
+      state.pokemonDetails = [];
+      state.loading = false;
     });
-    for (const pokemon of searchState.pokemonList) {
+    for (const pokemon of state.pokemonList) {
       const pokemonData: PokemonDescription = await fetch(pokemon.url).then(
         (res) => res.json(),
       );
-      searchState.pokemonDetails.push(pokemonData);
-      console.log(searchState.pokemonDetails);
+      state.pokemonDetails.push(pokemonData);
     }
   } catch (error) {
     console.error('Error:', error);
-    return searchState;
+    return state;
   }
-  return searchState;
+  return state;
 }
 
 export default Api;

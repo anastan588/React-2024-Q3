@@ -1,23 +1,32 @@
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import Api from '../api/api';
 import { PokemonDescription, SearchState } from '../types';
 import PokemonListPage from './pokemosListPage';
-import { Outlet} from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
+export const SearchContext = createContext<SearchState | undefined>(undefined);
 
 function SearchComponent() {
   const [state, setState] = useState<SearchState>({
-    searchTerm: '',
+    searchTerm: localStorage.getItem('searchTerm') || '',
     pokemonList: [],
     loading: false,
     pokemonDetails: [],
     pageNumber: 1,
   });
 
+  const navigate = useNavigate();
+
   const [filteredPokemonList, setFilteredPokemonList] = useState<
     PokemonDescription[]
   >([]);
 
   useEffect(() => {
+    const searchTerm = localStorage.getItem('searchTerm');
+    if (searchTerm) {
+      setState({ ...state, searchTerm: searchTerm });
+    }
     const fetchData = async () => {
       await requestForServer();
     };
@@ -37,13 +46,11 @@ function SearchComponent() {
   const handlePage = (pageNumber: number) => {
     state.pageNumber = pageNumber;
     setState({ ...state, pageNumber: pageNumber });
-    console.log(pageNumber);
     requestForServer();
   };
 
   async function requestForServer() {
     setState({ ...state, loading: true });
-    console.log(state.pageNumber);
     try {
       await Api(state).then((response) => {
         setState(response);
@@ -52,6 +59,7 @@ function SearchComponent() {
             pokemon.name.toLowerCase().includes(state.searchTerm.toLowerCase()),
           ),
         );
+        navigate(`/?page=${response.pageNumber}`, { replace: true });
         return response;
       });
     } catch (error) {
@@ -96,7 +104,9 @@ function SearchComponent() {
           <div className="pokemoms_container">
             <PokemonListPage filteredPokemonList={filteredPokemonList} />
             <div className="pokemon-detailed-page">
-              <Outlet />
+              <SearchContext.Provider value={state}>
+                <Outlet />
+              </SearchContext.Provider>
             </div>
           </div>
         </>

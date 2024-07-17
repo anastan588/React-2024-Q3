@@ -310,3 +310,41 @@ h6 {
   display: flex;
   gap: 20px;
 }
+
+.notfound-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 40px;
+  background-color: rgba(230, 26, 26, 0.4);
+  height: 100vh;
+}
+
+.notfound-button {
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  background-color: #ffd4f1;
+}
+
+.notfound-button:hover {
+  transform: scale(1.2);
+  transition: transform 0.2s ease-in-out;
+}
+
+.notfound-title {
+  font-weight: bold;
+  font-size: 200%;
+}
+.notfound-button {
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  background-color: #ffd4f1;
+}
+
+.notfound-button:hover {
+  transform: scale(1.2);
+  transition: transform 0.2s ease-in-out;
+}

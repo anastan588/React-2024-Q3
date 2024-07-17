@@ -21,16 +21,6 @@ function PokemonListPage({
                 <h3 className="pokemon-name">
                   {pokemon.name.toLocaleUpperCase()}
                 </h3>
-                <p className="pokemon-description-item">
-                  <span className="bold">Height:</span> {pokemon.height}
-                </p>
-                <p className="pokemon-description-item">
-                  <span className="bold">Weight:</span> {pokemon.weight}
-                </p>
-                <p className="pokemon-description-item">
-                  <span className="bold">Base experience:</span>{' '}
-                  {pokemon.base_experience}
-                </p>
               </div>
             </div>
           </Link>

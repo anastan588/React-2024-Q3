@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
-import { PokemonDescription } from '../types';
+import { PokemonDescription, SearchState } from '../types';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useContext } from 'react';
+import { SearchContext } from './search';
 
 function DetailedPageComponent() {
   const { id } = useParams<{ id: string }>();
@@ -8,7 +10,7 @@ function DetailedPageComponent() {
     useState<PokemonDescription | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-
+  const state = useContext(SearchContext) as SearchState;
 
   useEffect(() => {
     const fetchPokemonDetails = async () => {
@@ -22,20 +24,20 @@ function DetailedPageComponent() {
         console.error('Error fetching Pokemon details:', error);
       } finally {
         setIsLoading(false);
+        const url = `/?page=${state.pageNumber}&id=${id}`;
+        window.history.pushState({}, '', url);
       }
     };
     fetchPokemonDetails();
   }, [id]);
 
   if (!pokemonDetails) {
-      return <div>Loading...</div>;
+    return <div>Loading...</div>;
   }
 
-  
   const handleCloseClick = () => {
-    navigate('/');
+    navigate(`/?page=${state.pageNumber}`, { replace: true });
   };
-
 
   return (
     <>
@@ -43,7 +45,9 @@ function DetailedPageComponent() {
         <div className="loader">Loading...</div>
       ) : (
         <div key={pokemonDetails.id} className="pok-item">
-          <button className='close-button' onClick={handleCloseClick}>Close</button>
+          <button className="close-button" onClick={handleCloseClick}>
+            Close
+          </button>
           <img
             className="pokemon-image"
             src={`${pokemonDetails.sprites.back_default}`}
