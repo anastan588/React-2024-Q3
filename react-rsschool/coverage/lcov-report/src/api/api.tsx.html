@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.17% </span>
+                <span class="strong">5.88% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>7/17</span>
+                <span class='fraction'>1/17</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/3</span>
+                <span class='fraction'>0/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.17% </span>
+                <span class="strong">5.88% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/17</span>
+                <span class='fraction'>1/17</span>
             </div>
         
             
@@ -109,11 +109,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -121,8 +121,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -140,8 +140,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -149,13 +149,13 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { PokemonDescription, SearchState } from '../types';
 &nbsp;
-async function Api(searchState: SearchState) {
+async function <span class="fstat-no" title="function not covered" >Api(</span>searchState: SearchState) {
   const url =
-    searchState.searchTerm === ''
+<span class="cstat-no" title="statement not covered" >    searchState.searchTerm === ''</span>
       ? `https://pokeapi.co/api/v2/pokemon?limit=30&amp;offset=${searchState.pageNumber}`
-      : <span class="branch-1 cbranch-no" title="branch not covered" >`https://pokeapi.co/api/v2/pokemon?search=${searchState.searchTerm}&amp;limit=60&amp;offset=${searchState.pageNumber}`;</span>
+      : `https://pokeapi.co/api/v2/pokemon?search=${searchState.searchTerm}&amp;limit=60&amp;offset=${searchState.pageNumber}`;
 &nbsp;
-  const state: SearchState = {
+  const state: SearchState = <span class="cstat-no" title="statement not covered" >{</span>
     searchTerm: searchState.searchTerm,
     pokemonList: [],
     loading: true,
@@ -163,8 +163,8 @@ async function Api(searchState: SearchState) {
     pageNumber: searchState.pageNumber,
   };
 &nbsp;
-  try {
-    const response = await fetch(url, {
+<span class="cstat-no" title="statement not covered" >  try {</span>
+    const response = <span class="cstat-no" title="statement not covered" >await fetch(url, {</span>
       headers: {
         accept: 'application/json',
       },
@@ -182,8 +182,8 @@ async function Api(searchState: SearchState) {
 <span class="cstat-no" title="statement not covered" >      state.pokemonDetails.push(pokemonData);</span>
     }
   } catch (error) {
-    console.error('Error:', error);
-    return state;
+<span class="cstat-no" title="statement not covered" >    console.error('Error:', error);</span>
+<span class="cstat-no" title="statement not covered" >    return state;</span>
   }
 <span class="cstat-no" title="statement not covered" >  return state;</span>
 }
@@ -196,7 +196,7 @@ export default Api;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-07-20T09:08:13.896Z
+                at 2024-07-20T11:02:05.834Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

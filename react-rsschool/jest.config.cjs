@@ -2,8 +2,8 @@ module.exports = {
   verbose: true,
   preset: 'ts-jest',
   testEnvironment: 'jest-environment-jsdom',
-  "transform": {
-    "^.+\\.(js|jsx)$": "babel-jest"
+  transform: {
+    '^.+\\.(js|jsx)$': 'babel-jest',
   },
   moduleNameMapper: {
     '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/test/__ mocks __/fileMock.js',

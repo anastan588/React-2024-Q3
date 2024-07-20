@@ -8,10 +8,8 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "noEmit": true,
-    "jsx": "preserve",
+    "jsx": "preserve"
   },
   "include": ["vite.config.ts"],
-  "files": [
-        "./src/main.tsx"
-    ]
+  "files": ["./src/main.tsx"]
 }
