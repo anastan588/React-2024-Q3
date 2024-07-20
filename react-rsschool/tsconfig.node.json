@@ -7,7 +7,11 @@
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "noEmit": true
+    "noEmit": true,
+    "jsx": "preserve",
   },
-  "include": ["vite.config.ts"]
+  "include": ["vite.config.ts"],
+  "files": [
+        "./src/main.tsx"
+    ]
 }

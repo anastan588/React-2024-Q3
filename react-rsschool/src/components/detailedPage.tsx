@@ -13,6 +13,8 @@ function DetailedPageComponent() {
   const state = useContext(SearchContext) as SearchState;
 
   useEffect(() => {
+    const url = `/?page=${state.pageNumber}&details=${id}`;
+    window.history.pushState({}, '', url);
     const fetchPokemonDetails = async () => {
       setIsLoading(true);
       try {
@@ -24,8 +26,6 @@ function DetailedPageComponent() {
         console.error('Error fetching Pokemon details:', error);
       } finally {
         setIsLoading(false);
-        const url = `/?page=${state.pageNumber}&id=${id}`;
-        window.history.pushState({}, '', url);
       }
     };
     fetchPokemonDetails();
