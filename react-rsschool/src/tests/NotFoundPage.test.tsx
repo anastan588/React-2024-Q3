@@ -3,7 +3,6 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter as Router, useNavigate } from 'react-router-dom';
 import NotFoundPage from '../components/NotFoundPage';
 
-
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: jest.fn(),
@@ -14,7 +13,7 @@ describe('NotFoundPage', () => {
     render(
       <Router>
         <NotFoundPage />
-      </Router>
+      </Router>,
     );
 
     expect(screen.getByText('Page not found')).toBeInTheDocument();
@@ -28,7 +27,7 @@ describe('NotFoundPage', () => {
     render(
       <Router>
         <NotFoundPage />
-      </Router>
+      </Router>,
     );
 
     const mainPageButton = screen.getByText('Main page');
