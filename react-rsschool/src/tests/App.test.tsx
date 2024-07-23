@@ -6,7 +6,6 @@ import { ErrorBoundary } from '../components/errorBoundary';
 jest.mock('../App', () => () => <div>Mocked App</div>);
 
 test('renders App with ErrorBoundary', () => {
-  
   render(
     <ErrorBoundary>
       <App />
@@ -14,4 +13,3 @@ test('renders App with ErrorBoundary', () => {
   );
   expect(screen.getByText('Mocked App')).toBeInTheDocument();
 });
-
