@@ -1,45 +1,42 @@
-import { PokemonDescription, PokemonListResponse, SearchState } from '../types';
+import { PokemonDescription, SearchState } from '../types';
 
-export const pageNumber = 1;
-export const urlGETSearchDefault = `https://pokeapi.co/api/v2/pokemon?limit=30&offset=${pageNumber}`;
+async function Api(searchState: SearchState) {
+  const url =
+    searchState.searchTerm === ''
+      ? `https://pokeapi.co/api/v2/pokemon?limit=30&offset=${searchState.pageNumber}`
+      : `https://pokeapi.co/api/v2/pokemon?search=${searchState.searchTerm}&limit=60&offset=${searchState.pageNumber}`;
 
-export class Api {
-  constructor() {}
+  const state: SearchState = {
+    searchTerm: searchState.searchTerm,
+    pokemonList: [],
+    loading: true,
+    pokemonDetails: [],
+    pageNumber: searchState.pageNumber,
+  };
 
-  async fetchPokemonList(searchState: SearchState) {
-    const url =
-      searchState.searchTerm === ''
-        ? urlGETSearchDefault
-        : `https://pokeapi.co/api/v2/pokemon?search=${searchState.searchTerm}&limit=60&offset=${pageNumber}`;
-    await fetch(url, {
+  try {
+    const response = await fetch(url, {
       headers: {
         accept: 'application/json',
       },
-    })
-      .then((response) => {
-        const responseResult = response.json();
-        return responseResult;
-      })
-      .then((data: PokemonListResponse) => {
-        localStorage.setItem('searchTerm', searchState.searchTerm);
-        searchState.pokemonList = data.results;
-        searchState.pokemonDetails = [];
-        searchState.loading = false;
-        return searchState;
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-    for (const pokemon of searchState.pokemonList) {
-      try {
-        const pokemonData: PokemonDescription = await fetch(pokemon.url).then(
-          (res) => res.json(),
-        );
-        searchState.pokemonDetails.push(pokemonData);
-      } catch (error) {
-        console.error(`Error fetching details for ${pokemon.name}:`, error);
-      }
+    });
+    await response.json().then((data) => {
+      localStorage.setItem('searchTerm', searchState.searchTerm);
+      state.pokemonList = data.results;
+      state.pokemonDetails = [];
+      state.loading = false;
+    });
+    for (const pokemon of state.pokemonList) {
+      const pokemonData: PokemonDescription = await fetch(pokemon.url).then(
+        (res) => res.json(),
+      );
+      state.pokemonDetails.push(pokemonData);
     }
-    return searchState;
+  } catch (error) {
+    console.error('Error:', error);
+    return state;
   }
+  return state;
 }
+
+export default Api;

@@ -59,6 +59,21 @@ export interface Specy {
   name: string;
   url: string;
 }
+export interface Other {
+  dream_world: {
+    front_default: string;
+  };
+  home: {
+    front_default: string;
+  };
+  official_artwork: {
+    front_default: string;
+  };
+  showdown: {
+    front_default: string;
+  };
+}
+
 export interface Sprite {
   back_default: string | null;
   back_female: string | null;
@@ -68,6 +83,7 @@ export interface Sprite {
   front_female: string | null;
   front_shiny: string | null;
   front_shiny_female: string | null;
+  other: Other | null;
 }
 export interface PokemonDescription {
   abilities: AbilityItem[];
@@ -94,6 +110,7 @@ export interface SearchState {
   pokemonList: Pokemon[];
   loading: boolean;
   pokemonDetails: PokemonDescription[];
+  pageNumber: number;
 }
 
 export interface PokemonListResponse {
