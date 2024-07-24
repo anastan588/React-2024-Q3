@@ -23,8 +23,8 @@ export const pokemonApi = createApi({
         }
       },
     }),
-    getPokemonByName: builder.query<PokemonDescription, string>({
-      query: (name) => `pokemon/${name}`,
+    getPokemonById: builder.query<PokemonDescription, string>({
+      query: (id) => `pokemon/${id}`,
     }),
     getPokemonByNames: builder.query<PokemonDescription[], string[]>({
       queryFn: async (names) => {

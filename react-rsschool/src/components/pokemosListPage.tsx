@@ -17,7 +17,7 @@ function PokemonListPage({
                 src={`${pokemon.sprites.back_default}`}
                 alt="pokemon"
               ></img>
-              <input className='pokemon-selected' type="checkbox"></input>
+              <input className="pokemon-selected" type="checkbox"></input>
               <div className="pokemon-description">
                 <h3 className="pokemon-name">
                   {pokemon.name.toLocaleUpperCase()}
@@ -30,6 +30,5 @@ function PokemonListPage({
     </>
   );
 }
-
 
 export default PokemonListPage;

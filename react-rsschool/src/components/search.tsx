@@ -6,7 +6,7 @@ import { Outlet } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { pokemonApi } from '../store/ApiSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { initState, initStateLoad } from '../store/pokemonSlice';
+import { initPageLoad, initState, initStateLoad } from '../store/pokemonSlice';
 import { RootState } from '../store/store';
 
 export const SearchContext = createContext<SearchState | undefined>(undefined);
@@ -33,10 +33,11 @@ function SearchComponent() {
     (state: RootState) => state.pokemonsData.isLoading,
   );
 
+
   const useGetPokemonsQuery = pokemonApi.endpoints.getPokemons.useQuery;
   const useGetPokemonByNamesQuery =
     pokemonApi.endpoints.getPokemonByNames.useQuery;
-  // setState({ ...state, searchTerm: state.searchTerm });
+
 
   const { data, error, isLoading } = useGetPokemonsQuery({
     searchTerm: statePoki.searchTerm,
@@ -69,6 +70,7 @@ function SearchComponent() {
         pokemonDetails: pokemonDetails!,
       }));
       dispatch(initState(pokemonDetails!));
+      dispatch(initPageLoad(statePoki.pageNumber));
       navigate(`/?page=${statePoki.pageNumber}`, { replace: true });
       setState((prevState) => ({
         ...prevState,
@@ -83,6 +85,7 @@ function SearchComponent() {
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     searchTerm = event.target.value;
+    localStorage.setItem('searchTerm', searchTerm);
   };
 
   const handleSearch = async () => {
@@ -96,6 +99,7 @@ function SearchComponent() {
   const handlePage = (pageNumber: number) => {
     statePoki.loading = true;
     dispatch(initStateLoad(statePoki.loading));
+    dispatch(initPageLoad(pageNumber));
     statePoki.pageNumber = pageNumber;
     setTimeout(() => {
       statePoki.loading = false;

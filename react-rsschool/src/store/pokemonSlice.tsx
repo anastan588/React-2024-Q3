@@ -4,11 +4,13 @@ import { PokemonDescription } from '../types';
 export interface PokemonState {
   pokemons: PokemonDescription[];
   isLoading: boolean;
+  pageNumber: number;
 }
 
 const initialPokemonState: PokemonState = {
   pokemons: [],
   isLoading: true,
+  pageNumber: 1,
 };
 
 export const pokemonsSlice = createSlice({
@@ -21,10 +23,13 @@ export const pokemonsSlice = createSlice({
     initStateLoad: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
+    initPageLoad: (state, action: PayloadAction<number>) => {
+      state.pageNumber = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { initState, initStateLoad } = pokemonsSlice.actions;
+export const { initState, initStateLoad, initPageLoad } = pokemonsSlice.actions;
 
 export default pokemonsSlice.reducer;
