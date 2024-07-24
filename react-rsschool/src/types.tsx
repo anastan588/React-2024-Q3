@@ -123,3 +123,8 @@ export interface PokemonListResponse {
 export interface ErrorBoundaryState {
   hasError: boolean;
 }
+
+export interface SearchParams {
+  searchTerm?: string;
+  pageNumber?: number;
+}

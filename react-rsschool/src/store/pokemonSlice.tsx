@@ -1,32 +1,30 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PokemonDescription } from '../types';
 
 export interface PokemonState {
   pokemons: PokemonDescription[];
+  isLoading: boolean;
 }
 
 const initialPokemonState: PokemonState = {
   pokemons: [],
+  isLoading: true,
 };
 
-export const counterSlice = createSlice({
+export const pokemonsSlice = createSlice({
   name: 'pokemon',
   initialState: initialPokemonState,
   reducers: {
-    increment: (state) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.pokemons = [...state.pokemons];
+    initState: (state, action: PayloadAction<PokemonDescription[]>) => {
+      state.pokemons = action.payload;
     },
-    decrement: (state) => {
-        state.pokemons = [...state.pokemons];
+    initStateLoad: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement} = counterSlice.actions;
+export const { initState, initStateLoad } = pokemonsSlice.actions;
 
-export default counterSlice.reducer;
+export default pokemonsSlice.reducer;

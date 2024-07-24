@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from './pokemonSlice';
+import pokemonReducer from './pokemonSlice';
 import { pokemonApi } from './ApiSlice';
 import { setupListeners } from '@reduxjs/toolkit/query';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    pokemonsData: pokemonReducer,
     [pokemonApi.reducerPath]: pokemonApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

@@ -31,4 +31,5 @@ function PokemonListPage({
   );
 }
 
+
 export default PokemonListPage;
