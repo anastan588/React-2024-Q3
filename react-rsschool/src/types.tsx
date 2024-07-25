@@ -128,3 +128,16 @@ export interface SearchParams {
   searchTerm?: string;
   pageNumber?: number;
 }
+
+export interface ThemeColors {
+  background: string;
+  text: string;
+}
+
+export interface ThemeContextType {
+  theme: Theme;
+  colors: ThemeColors;
+  toggleTheme: () => void;
+}
+
+export type Theme = 'light' | 'dark';

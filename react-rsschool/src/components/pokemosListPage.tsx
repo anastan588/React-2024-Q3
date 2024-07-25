@@ -13,19 +13,21 @@ function PokemonListPage({
   const selectedPokemonList = useSelector(
     (state: RootState) => state.pokemonsData.selectedPokemons,
   );
-  const [pokemonListForRender, setPokemonListForRender] = useState<PokemonDescription[]>([]);
+  const [pokemonListForRender, setPokemonListForRender] = useState<
+    PokemonDescription[]
+  >([]);
 
   useEffect(() => {
     const updateFilteredPokemonList = async () => {
       const newFilteredPokemonList: PokemonDescription[] = [
         ...selectedPokemonList.filter((pokemon) =>
-          filteredPokemonList.every((el) => pokemon.id !== el.id)
+          filteredPokemonList.every((el) => pokemon.id !== el.id),
         ),
         ...filteredPokemonList.filter((pokemon) =>
           pokemon.name
             .toLowerCase()
-            .includes(localStorage.getItem('searchTerm')?.toLowerCase() || '')
-        )
+            .includes(localStorage.getItem('searchTerm')?.toLowerCase() || ''),
+        ),
       ];
       setPokemonListForRender(newFilteredPokemonList);
     };
@@ -80,7 +82,9 @@ function PokemonListPage({
               ></img>
               <input
                 className="pokemon-selected"
-                checked={selectedPokemonList.some((item) => item.id === pokemon.id)}
+                checked={selectedPokemonList.some(
+                  (item) => item.id === pokemon.id,
+                )}
                 type="checkbox"
                 onChange={(event) => handleCheckboxChange(event, pokemon)}
               ></input>

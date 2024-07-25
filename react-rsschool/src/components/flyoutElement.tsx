@@ -3,7 +3,6 @@ import { RootState } from '../store/store';
 import { cleanSelectedState } from '../store/pokemonSlice';
 import { saveAs } from 'file-saver';
 
-
 const FlyoutComponent = () => {
   const selectedPokemonList = useSelector(
     (state: RootState) => state.pokemonsData.selectedPokemons,
@@ -20,7 +19,10 @@ const FlyoutComponent = () => {
       csvRows.push([
         pokemon.id.toString(),
         pokemon.name,
-        `${pokemon.abilities.map((el) => el.ability.name).join(';').toUpperCase()}`,
+        `${pokemon.abilities
+          .map((el) => el.ability.name)
+          .join(';')
+          .toUpperCase()}`,
         `https://pokeapi.co/api/v2/pokemon/${pokemon.id}`,
       ]);
     }
