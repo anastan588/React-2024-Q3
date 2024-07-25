@@ -10,7 +10,9 @@ function DetailedPageComponent() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const state = useContext(SearchContext) as SearchState;
-  const useGetPokemonByIdQuery = pokemonApi.endpoints.getPokemonById.useQuery(id!);
+  const useGetPokemonByIdQuery = pokemonApi.endpoints.getPokemonById.useQuery(
+    id!,
+  );
 
   const { data, isLoading, error } = useGetPokemonByIdQuery;
 

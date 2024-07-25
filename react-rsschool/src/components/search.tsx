@@ -29,15 +29,17 @@ function SearchComponent() {
     (state: RootState) => state.pokemonsData.pokemons,
   );
 
+  // const selectedPokemonList = useSelector(
+  //   (state: RootState) => state.pokemonsData.selectedPokemons,
+  // );
+
   const isLoadingMain = useSelector(
     (state: RootState) => state.pokemonsData.isLoading,
   );
 
-
   const useGetPokemonsQuery = pokemonApi.endpoints.getPokemons.useQuery;
   const useGetPokemonByNamesQuery =
     pokemonApi.endpoints.getPokemonByNames.useQuery;
-
 
   const { data, error, isLoading } = useGetPokemonsQuery({
     searchTerm: statePoki.searchTerm,
@@ -72,11 +74,10 @@ function SearchComponent() {
       dispatch(initState(pokemonDetails!));
       dispatch(initPageLoad(statePoki.pageNumber));
       navigate(`/?page=${statePoki.pageNumber}`, { replace: true });
-      setState((prevState) => ({
-        ...prevState,
-        loading: false,
-      }));
-      dispatch(initStateLoad(statePoki.loading));
+      setTimeout(() => {
+        statePoki.loading = false;
+        dispatch(initStateLoad(statePoki.loading));
+      }, 1200);
       console.log(pokemonDetailsError);
     }
   }, [pokemonDetailsLoading, pokemonDetails]);
@@ -101,10 +102,11 @@ function SearchComponent() {
     dispatch(initStateLoad(statePoki.loading));
     dispatch(initPageLoad(pageNumber));
     statePoki.pageNumber = pageNumber;
+    navigate(`/?page=${statePoki.pageNumber}`, { replace: true });
     setTimeout(() => {
       statePoki.loading = false;
       dispatch(initStateLoad(statePoki.loading));
-    }, 500);
+    }, 1200);
   };
 
   return (
@@ -139,11 +141,7 @@ function SearchComponent() {
             </button>
           </div>
           <div className="pokemoms_container">
-            <PokemonListPage
-              filteredPokemonList={filteredPokemonList.filter((pokemon) =>
-                pokemon.name.toLowerCase().includes(statePoki.searchTerm),
-              )}
-            />
+            <PokemonListPage filteredPokemonList={filteredPokemonList} />
             <div className="pokemon-detailed-page">
               <SearchContext.Provider value={statePoki}>
                 <Outlet />

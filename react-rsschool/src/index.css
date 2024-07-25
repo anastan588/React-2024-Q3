@@ -348,3 +348,37 @@ h6 {
   transform: scale(1.2);
   transition: transform 0.2s ease-in-out;
 }
+
+.flyout-container {
+  position: absolute;
+  top: 65px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  background-color: #ffd4f1;
+  border: 2px solid white;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.flyout_buttons {
+  display: flex;
+  gap: 15px;
+}
+.flyout-text {
+  font-weight: bold;
+}
+
+.flyout_button {
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  background-color: rgba(230, 26, 26, 0.4);
+}
+
+.flyout_button:hover {
+  transform: scale(1.2);
+  transition: transform 0.2s ease-in-out;
+}

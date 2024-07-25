@@ -3,6 +3,7 @@ import SearchComponent from './search';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
+import FlyoutComponent from './flyoutElement';
 
 function MainPageComponent() {
   const [state, setState] = useState({
@@ -10,6 +11,10 @@ function MainPageComponent() {
   });
   const isPageNumber = useSelector(
     (state: RootState) => state.pokemonsData.pageNumber,
+  );
+
+  const selectedPokemonList = useSelector(
+    (state: RootState) => state.pokemonsData.selectedPokemons,
   );
 
   const navigate = useNavigate();
@@ -22,7 +27,6 @@ function MainPageComponent() {
   const handleCloseClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     const target = event.target as HTMLElement;
-    console.log(target);
     if (
       target.classList.contains('main') ||
       target.classList.contains('main_container') ||
@@ -45,6 +49,7 @@ function MainPageComponent() {
       </header>
       <main className="main">
         <SearchComponent />
+        {selectedPokemonList.length !== 0 ? <FlyoutComponent /> : null}
       </main>
       <footer className="footer">
         <p className="footer_item">anastan588</p>

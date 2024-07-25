@@ -5,12 +5,14 @@ export interface PokemonState {
   pokemons: PokemonDescription[];
   isLoading: boolean;
   pageNumber: number;
+  selectedPokemons: PokemonDescription[];
 }
 
 const initialPokemonState: PokemonState = {
   pokemons: [],
   isLoading: true,
   pageNumber: 1,
+  selectedPokemons: [],
 };
 
 export const pokemonsSlice = createSlice({
@@ -26,10 +28,33 @@ export const pokemonsSlice = createSlice({
     initPageLoad: (state, action: PayloadAction<number>) => {
       state.pageNumber = action.payload;
     },
+    addSelectedState: (state, action: PayloadAction<PokemonDescription>) => {
+      const isSelected = state.selectedPokemons.some(
+        (pokemon) => pokemon.id === action.payload.id,
+      );
+      if (!isSelected) {
+        state.selectedPokemons = [...state.selectedPokemons, action.payload];
+      }
+    },
+    removeSelectedState: (state, action: PayloadAction<PokemonDescription>) => {
+      state.selectedPokemons = state.selectedPokemons.filter(
+        (pokemon) => pokemon.id !== action.payload.id,
+      );
+    },
+    cleanSelectedState: (state) => {
+      state.selectedPokemons = [];
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { initState, initStateLoad, initPageLoad } = pokemonsSlice.actions;
+export const {
+  initState,
+  initStateLoad,
+  initPageLoad,
+  addSelectedState,
+  removeSelectedState,
+  cleanSelectedState,
+} = pokemonsSlice.actions;
 
 export default pokemonsSlice.reducer;
