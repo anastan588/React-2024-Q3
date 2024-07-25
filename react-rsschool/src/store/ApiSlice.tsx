@@ -7,7 +7,7 @@ import {
   PokemonDescription,
   PokemonListResponse,
   SearchParams,
-} from '../types.tsx';
+} from '../types';
 
 export const pokemonApi = createApi({
   reducerPath: 'pokemonApi',
