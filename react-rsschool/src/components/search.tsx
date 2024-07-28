@@ -45,7 +45,7 @@ function SearchComponent() {
     searchTerm: statePoki.searchTerm,
     pageNumber: statePoki.pageNumber,
   });
-
+    
   useEffect(() => {
     if (!isLoading) {
       setState((prevState) => ({
@@ -55,9 +55,13 @@ function SearchComponent() {
       console.log(error);
     }
   }, [isLoading, data]);
+
+  
   const pokemonsNames = statePoki.pokemonList.map((pokemon) => {
     return pokemon.name;
   });
+
+
 
   const {
     data: pokemonDetails,
@@ -81,6 +85,7 @@ function SearchComponent() {
       console.log(pokemonDetailsError);
     }
   }, [pokemonDetailsLoading, pokemonDetails]);
+
 
   const handleSearchInputChange = (
     event: React.ChangeEvent<HTMLInputElement>,

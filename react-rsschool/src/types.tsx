@@ -76,34 +76,34 @@ export interface Other {
 
 export interface Sprite {
   back_default: string | null;
-  back_female: string | null;
-  back_shiny: string | null;
-  back_shiny_female: string | null;
-  front_default: string | null;
-  front_female: string | null;
-  front_shiny: string | null;
-  front_shiny_female: string | null;
-  other: Other | null;
+  back_female?: string | null;
+  back_shiny?: string | null;
+  back_shiny_female?: string | null;
+  front_default?: string | null;
+  front_female?: string | null;
+  front_shiny?: string | null;
+  front_shiny_female?: string | null;
+  other?: Other | null;
 }
 export interface PokemonDescription {
-  abilities: AbilityItem[];
-  base_experience: number;
-  cries: Cry;
-  forms: Form[];
-  game_indices: GameIndiceItem[];
-  height: number;
-  held_items: [];
+  abilities?: AbilityItem[];
+  base_experience?: number;
+  cries?: Cry;
+  forms?: Form[];
+  game_indices?: GameIndiceItem[];
+  height?: number;
+  held_items?: [];
   id: number;
-  is_default: boolean;
-  location_area_encounters: string;
-  moves: MoveItem[];
-  name: string;
-  order: number;
-  past_abilities: [];
-  past_types: [];
-  species: Specy;
-  sprites: Sprite;
-  weight: number;
+  is_default?: boolean;
+  location_area_encounters?: string;
+  moves?: MoveItem[];
+  name?: string;
+  order?: number;
+  past_abilities?: [];
+  past_types?: [];
+  species?: Specy;
+  sprites?: Sprite;
+  weight?: number;
 }
 export interface SearchState {
   searchTerm: string;
@@ -141,3 +141,36 @@ export interface ThemeContextType {
 }
 
 export type Theme = 'light' | 'dark';
+
+
+interface PokemonTest {
+  id: number;
+  name: string;
+  abilities?: { ability: { name: string } }[];
+}
+
+interface PokemonsState {
+  pageNumber?: number;
+  selectedPokemons: PokemonTest[];
+  pokemons?: PokemonTest[]; 
+  isLoading?: boolean;
+}
+
+
+
+export interface RootStateTest {
+  pokemonsData: PokemonsState;
+}
+
+export type PokemonsActionTest = {
+  type: 'ADD_POKEMON';
+  payload: Pokemon;
+} | {
+  type: 'REMOVE_POKEMON';
+  payload: number;
+};
+
+
+export interface MockStateTest extends SearchState {
+  pageNumber: number;
+}

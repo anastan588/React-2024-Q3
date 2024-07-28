@@ -1,10 +1,11 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import SearchComponent from './search';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
+import { RootState, store } from '../store/store';
 import FlyoutComponent from './flyoutElement';
 import { ThemeContext } from './themeProvider';
+import { pokemonApi } from '../store/ApiSlice';
 
 function MainPageComponent() {
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -26,6 +27,28 @@ function MainPageComponent() {
   if (state.errorThrown) {
     throw new Error('This is a test error');
   }
+
+  const [storeReady, setStoreReady] = useState(false);
+
+  useEffect(() => {
+    // Check if the store is ready
+    const unsubscribe = store.subscribe(() => {
+      const state = store.getState() as RootState;
+      if (state[pokemonApi.reducerPath]) {
+        setStoreReady(true);
+        unsubscribe();
+      }
+    });
+
+    return unsubscribe;
+  }, []);
+
+  if (!storeReady) {
+    return <div>Loading...</div>;
+  }
+
+
+
   const handleCloseClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     const target = event.target as HTMLElement;
