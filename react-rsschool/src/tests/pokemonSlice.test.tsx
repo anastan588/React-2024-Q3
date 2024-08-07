@@ -1,11 +1,16 @@
 import { configureStore, Store } from '@reduxjs/toolkit';
-import pokemonReducer, { addSelectedState, cleanSelectedState, initPageLoad, initStateLoad, removeSelectedState } from '../store/pokemonSlice';
+import pokemonReducer, {
+  addSelectedState,
+  cleanSelectedState,
+  initPageLoad,
+  initStateLoad,
+  removeSelectedState,
+} from '../store/pokemonSlice';
 import { PokemonDescription } from '../types';
 import { initState } from '../store/pokemonSlice';
 
-
 describe('pokemonsSlice', () => {
-  let store: Store
+  let store: Store;
 
   beforeEach(() => {
     store = configureStore({
@@ -47,7 +52,7 @@ describe('pokemonsSlice', () => {
 
     store.dispatch(addSelectedState(selectedPokemon));
     expect(store.getState().pokemonsData.selectedPokemons).toContainEqual(
-      selectedPokemon
+      selectedPokemon,
     );
   });
 
@@ -59,12 +64,12 @@ describe('pokemonsSlice', () => {
 
     store.dispatch(addSelectedState(selectedPokemon));
     expect(store.getState().pokemonsData.selectedPokemons).toContainEqual(
-      selectedPokemon
+      selectedPokemon,
     );
 
     store.dispatch(removeSelectedState(selectedPokemon));
     expect(store.getState().pokemonsData.selectedPokemons).not.toContainEqual(
-      selectedPokemon
+      selectedPokemon,
     );
   });
 
@@ -86,7 +91,4 @@ describe('pokemonsSlice', () => {
     store.dispatch(cleanSelectedState());
     expect(store.getState().pokemonsData.selectedPokemons).toHaveLength(0);
   });
-
-
-  
 });

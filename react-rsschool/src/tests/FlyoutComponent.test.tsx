@@ -6,23 +6,28 @@ import FlyoutComponent from '../components/flyoutElement';
 import { PokemonsActionTest, RootStateTest } from '../types';
 import { saveAs } from 'file-saver';
 
-
 jest.mock('file-saver', () => ({
   saveAs: jest.fn(),
 }));
 
-
 describe('FlyoutComponent', () => {
-  
-  let store:  MockStoreEnhanced<RootStateTest, PokemonsActionTest>;
+  let store: MockStoreEnhanced<RootStateTest, PokemonsActionTest>;
 
   beforeEach(() => {
     const mockStore = configureStore<RootStateTest, PokemonsActionTest>();
     store = mockStore({
       pokemonsData: {
         selectedPokemons: [
-          { id: 1, name: 'Pikachu', abilities: [{ ability: { name: 'static' } }] },
-          { id: 2, name: 'Bulbasaur', abilities: [{ ability: { name: 'overgrow' } }] },
+          {
+            id: 1,
+            name: 'Pikachu',
+            abilities: [{ ability: { name: 'static' } }],
+          },
+          {
+            id: 2,
+            name: 'Bulbasaur',
+            abilities: [{ ability: { name: 'overgrow' } }],
+          },
         ],
       },
     });
@@ -32,7 +37,7 @@ describe('FlyoutComponent', () => {
     const { getByText } = render(
       <Provider store={store}>
         <FlyoutComponent />
-      </Provider>
+      </Provider>,
     );
     expect(getByText('2 pokemons are selected')).toBeInTheDocument();
   });
@@ -41,23 +46,22 @@ describe('FlyoutComponent', () => {
     const { getByText } = render(
       <Provider store={store}>
         <FlyoutComponent />
-      </Provider>
+      </Provider>,
     );
 
     fireEvent.click(getByText('Unselect all'));
-    expect(store.getActions()).toContainEqual(expect.objectContaining({ type: 'pokemon/cleanSelectedState' }));
+    expect(store.getActions()).toContainEqual(
+      expect.objectContaining({ type: 'pokemon/cleanSelectedState' }),
+    );
   });
 
   test('downloads a CSV file when "Download" button is clicked', () => {
     const { getByText } = render(
       <Provider store={store}>
         <FlyoutComponent />
-      </Provider>
+      </Provider>,
     );
     fireEvent.click(getByText('Download'));
-    expect(saveAs).toHaveBeenCalledWith(
-      expect.any(Blob),
-      '2_pokemons.csv'
-    );
+    expect(saveAs).toHaveBeenCalledWith(expect.any(Blob), '2_pokemons.csv');
   });
 });

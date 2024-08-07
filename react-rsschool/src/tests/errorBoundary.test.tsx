@@ -1,7 +1,6 @@
 import React from 'react';
-import { render, screen} from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { ErrorBoundary } from '../components/errorBoundary';
-
 
 describe('ErrorBoundary', () => {
   const ChildComponent = () => {
@@ -13,7 +12,7 @@ describe('ErrorBoundary', () => {
     render(
       <ErrorBoundary>
         <ChildComponent />
-      </ErrorBoundary>
+      </ErrorBoundary>,
     );
 
     expect(screen.getByText('Something went wrong')).toBeInTheDocument();
@@ -24,7 +23,7 @@ describe('ErrorBoundary', () => {
     render(
       <ErrorBoundary>
         <div>Hello, world!</div>
-      </ErrorBoundary>
+      </ErrorBoundary>,
     );
 
     expect(screen.getByText('Hello, world!')).toBeInTheDocument();

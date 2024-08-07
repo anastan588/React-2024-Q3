@@ -47,8 +47,6 @@ function MainPageComponent() {
     return <div>Loading...</div>;
   }
 
-
-
   const handleCloseClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     const target = event.target as HTMLElement;

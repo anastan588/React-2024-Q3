@@ -142,7 +142,6 @@ export interface ThemeContextType {
 
 export type Theme = 'light' | 'dark';
 
-
 interface PokemonTest {
   id: number;
   name: string;
@@ -152,24 +151,23 @@ interface PokemonTest {
 interface PokemonsState {
   pageNumber?: number;
   selectedPokemons: PokemonTest[];
-  pokemons?: PokemonTest[]; 
+  pokemons?: PokemonTest[];
   isLoading?: boolean;
 }
-
-
 
 export interface RootStateTest {
   pokemonsData: PokemonsState;
 }
 
-export type PokemonsActionTest = {
-  type: 'ADD_POKEMON';
-  payload: Pokemon;
-} | {
-  type: 'REMOVE_POKEMON';
-  payload: number;
-};
-
+export type PokemonsActionTest =
+  | {
+      type: 'ADD_POKEMON';
+      payload: Pokemon;
+    }
+  | {
+      type: 'REMOVE_POKEMON';
+      payload: number;
+    };
 
 export interface MockStateTest extends SearchState {
   pageNumber: number;

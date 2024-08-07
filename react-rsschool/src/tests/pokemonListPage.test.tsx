@@ -1,12 +1,12 @@
 import React from 'react';
-import { render, screen} from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { PokemonDescription } from '../types';
 import { addSelectedState, removeSelectedState } from '../store/pokemonSlice';
 import PokemonListPage from '../components/pokemosListPage';
-import { MemoryRouter} from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 
 const mockStore = configureStore([]);
 
@@ -53,12 +53,11 @@ describe('PokemonListPage', () => {
         </MemoryRouter>
       </Provider>,
     );
-setTimeout(()=> {
-     expect(screen.getByText('Bulbasaur')).toBeInTheDocument();
-    expect(screen.getByText('Charmander')).toBeInTheDocument();
-    expect(screen.getByText('Squirtle')).toBeInTheDocument();
-},1200)
-   
+    setTimeout(() => {
+      expect(screen.getByText('Bulbasaur')).toBeInTheDocument();
+      expect(screen.getByText('Charmander')).toBeInTheDocument();
+      expect(screen.getByText('Squirtle')).toBeInTheDocument();
+    }, 1200);
   });
 
   it('should toggle the selected state of a Pokemon', () => {
@@ -69,15 +68,20 @@ setTimeout(()=> {
         </MemoryRouter>
       </Provider>,
     );
-setTimeout(()=> {
-      const bulbasaurCheckbox = screen.getByRole('checkbox', { name: 'Bulbasaur' });
-    userEvent.click(bulbasaurCheckbox);
+    setTimeout(() => {
+      const bulbasaurCheckbox = screen.getByRole('checkbox', {
+        name: 'Bulbasaur',
+      });
+      userEvent.click(bulbasaurCheckbox);
 
-    expect(store.getActions()).toContainEqual(addSelectedState(mockPokemonList[0]));
+      expect(store.getActions()).toContainEqual(
+        addSelectedState(mockPokemonList[0]),
+      );
 
-    userEvent.click(bulbasaurCheckbox);
-    expect(store.getActions()).toContainEqual(removeSelectedState(mockPokemonList[0]));
-},1200)
-  
+      userEvent.click(bulbasaurCheckbox);
+      expect(store.getActions()).toContainEqual(
+        removeSelectedState(mockPokemonList[0]),
+      );
+    }, 1200);
   });
 });

@@ -46,7 +46,6 @@ function SearchComponent() {
     pageNumber: statePoki.pageNumber,
   });
 
-
   useEffect(() => {
     if (!isLoading && !error) {
       setState((prevState) => ({

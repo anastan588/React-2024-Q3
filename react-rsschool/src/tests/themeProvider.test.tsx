@@ -26,7 +26,7 @@ describe('ThemeProvider', () => {
     render(
       <ThemeProvider>
         <TestComponent />
-      </ThemeProvider>
+      </ThemeProvider>,
     );
 
     // Check the initial state

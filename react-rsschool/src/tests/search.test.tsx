@@ -90,7 +90,7 @@ describe('SearchComponent', () => {
         const nextPageButton = screen.getByText('Next page');
         fireEvent.click(nextPageButton);
         expect(store.dispatch).toHaveBeenCalledWith(initStateLoad(true));
-      },1500);
+      }, 1500);
     });
   });
 });
