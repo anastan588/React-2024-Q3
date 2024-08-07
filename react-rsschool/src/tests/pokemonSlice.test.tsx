@@ -86,4 +86,7 @@ describe('pokemonsSlice', () => {
     store.dispatch(cleanSelectedState());
     expect(store.getState().pokemonsData.selectedPokemons).toHaveLength(0);
   });
+
+
+  
 });
