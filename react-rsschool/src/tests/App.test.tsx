@@ -6,8 +6,6 @@ import { ThemeProvider } from '../components/themeProvider';
 import App from '../App';
 import { store } from '../store/store';
 
-
-
 describe('App', () => {
   test('renders the main page component', () => {
     render(
@@ -15,11 +13,11 @@ describe('App', () => {
         <ThemeProvider>
           <App />
         </ThemeProvider>
-      </Provider>
+      </Provider>,
     );
-    setTimeout(()=> {expect(screen.getByTestId('main-page')).toBeInTheDocument();
-    },1000)
-    
+    setTimeout(() => {
+      expect(screen.getByTestId('main-page')).toBeInTheDocument();
+    }, 1000);
   });
 
   test('renders the detailed page component when navigating to /details/:id', () => {
@@ -28,13 +26,12 @@ describe('App', () => {
         <ThemeProvider>
           <App />
         </ThemeProvider>
-      </Provider>
+      </Provider>,
     );
-    setTimeout(()=> {
-       window.history.pushState({}, '', '/details/1');
-    expect(screen.getByTestId('detailed-page')).toBeInTheDocument();
-    }, 1000)
-   
+    setTimeout(() => {
+      window.history.pushState({}, '', '/details/1');
+      expect(screen.getByTestId('detailed-page')).toBeInTheDocument();
+    }, 1000);
   });
 
   test('renders the not found page component for invalid routes', () => {
@@ -43,11 +40,11 @@ describe('App', () => {
         <ThemeProvider>
           <App />
         </ThemeProvider>
-      </Provider>
+      </Provider>,
     );
-    setTimeout(()=> {window.history.pushState({}, '', '/invalid-route');
-    expect(screen.getByTestId('not-found-page')).toBeInTheDocument();
-    },1000)
-    
+    setTimeout(() => {
+      window.history.pushState({}, '', '/invalid-route');
+      expect(screen.getByTestId('not-found-page')).toBeInTheDocument();
+    }, 1000);
   });
 });

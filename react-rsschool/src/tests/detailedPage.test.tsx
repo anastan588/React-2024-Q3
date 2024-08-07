@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen} from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
@@ -50,7 +50,7 @@ const setup = () => {
           />
         </Routes>
       </MemoryRouter>
-    </Provider>
+    </Provider>,
   );
 };
 
@@ -60,14 +60,15 @@ describe('DetailedPageComponent', () => {
   });
 
   test('when the component is loading, it should display a loading indicator', () => {
-    (pokemonApi.endpoints.getPokemonById.useQuery as jest.Mock).mockReturnValue({
-      data: undefined,
-      isLoading: true,
-      error: null,
-    });
+    (pokemonApi.endpoints.getPokemonById.useQuery as jest.Mock).mockReturnValue(
+      {
+        data: undefined,
+        isLoading: true,
+        error: null,
+      },
+    );
 
     setup();
     expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
-
 });
