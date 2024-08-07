@@ -45,23 +45,21 @@ function SearchComponent() {
     searchTerm: statePoki.searchTerm,
     pageNumber: statePoki.pageNumber,
   });
-    
+
+
   useEffect(() => {
-    if (!isLoading) {
+    if (!isLoading && !error) {
       setState((prevState) => ({
         ...prevState,
         pokemonList: data!.results,
       }));
       console.log(error);
     }
-  }, [isLoading, data]);
+  }, [isLoading, error, data]);
 
-  
   const pokemonsNames = statePoki.pokemonList.map((pokemon) => {
     return pokemon.name;
   });
-
-
 
   const {
     data: pokemonDetails,
@@ -85,7 +83,6 @@ function SearchComponent() {
       console.log(pokemonDetailsError);
     }
   }, [pokemonDetailsLoading, pokemonDetails]);
-
 
   const handleSearchInputChange = (
     event: React.ChangeEvent<HTMLInputElement>,
