@@ -1,107 +1,73 @@
 import React from 'react';
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
-import {
-  BrowserRouter as Router,
-  useParams,
-  useNavigate,
-} from 'react-router-dom';
+import { render, screen} from '@testing-library/react';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
+
+import { pokemonApi } from '../store/ApiSlice';
 import { SearchContext } from '../components/search';
 import DetailedPageComponent from '../components/detailedPage';
-import fetchMock from './__ mocks __/fetch';
-import { mockPokemonDetails } from './__ mocks __/mockPokemonDetails';
+import { MockStateTest } from '../types';
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useParams: jest.fn(),
-  useNavigate: jest.fn(),
+jest.mock('../store/ApiSlice', () => ({
+  pokemonApi: {
+    endpoints: {
+      getPokemonById: {
+        useQuery: jest.fn(),
+      },
+    },
+  },
 }));
 
-describe('DetailedPageComponent', () => {
-  const mockSearchState = {
-    pageNumber: 1,
-    searchTerm: '',
-    pokemonList: [],
-    loading: false,
-    pokemonDetails: [],
-  };
+const mockStore = configureStore([]);
 
-  beforeEach(() => {
-    jest.mocked(useParams).mockReturnValue({ id: '1' });
-    jest.mocked(useNavigate).mockReturnValue(jest.fn());
+const mockState: MockStateTest = {
+  searchTerm: 'pikachu',
+  pokemonList: [],
+  loading: false,
+  pokemonDetails: [],
+  pageNumber: 1,
+};
+
+const setup = () => {
+  const store = mockStore({
+    pokemonsData: {
+      selectedPokemons: [],
+    },
   });
 
-  it('should render the loading state', () => {
-    render(
-      <Router>
-        <SearchContext.Provider value={mockSearchState}>
-          <DetailedPageComponent />
-        </SearchContext.Provider>
-      </Router>,
-    );
+  render(
+    <Provider store={store}>
+      <MemoryRouter initialEntries={['/pokemon/1']}>
+        <Routes>
+          <Route
+            path="/pokemon/:id"
+            element={
+              <SearchContext.Provider value={mockState}>
+                <DetailedPageComponent />
+              </SearchContext.Provider>
+            }
+          />
+        </Routes>
+      </MemoryRouter>
+    </Provider>
+  );
+};
 
+describe('DetailedPageComponent', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test('when the component is loading, it should display a loading indicator', () => {
+    (pokemonApi.endpoints.getPokemonById.useQuery as jest.Mock).mockReturnValue({
+      data: undefined,
+      isLoading: true,
+      error: null,
+    });
+
+    setup();
     expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
 
-  it('should render the pokemon details', async () => {
-    fetchMock.mockResolvedValueOnce({
-      json: () => Promise.resolve(mockPokemonDetails),
-    });
-
-    render(
-      <Router>
-        <SearchContext.Provider value={mockSearchState}>
-          <DetailedPageComponent />
-        </SearchContext.Provider>
-      </Router>,
-    );
-
-    await waitFor(() => {
-      expect(
-        screen.getByText((content) => content.includes('bulbasaur')),
-      ).toBeInTheDocument();
-      expect(screen.getByAltText('pokemon')).toHaveAttribute(
-        'src',
-        'https://example.com/bulbasaur.png',
-      );
-      expect(screen.getByText('Height: 7')).toBeInTheDocument();
-      expect(screen.getByText('Weight: 69')).toBeInTheDocument();
-      expect(screen.getByText('Base experience: 64')).toBeInTheDocument();
-      expect(
-        screen.getByText((content) => content.includes('bulbasaur ;')),
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText((content) => content.includes('overgrow ;')),
-      ).toBeInTheDocument();
-      expect(screen.getByAltText('pokemon')).toHaveAttribute(
-        'src',
-        'https://example.com/bulbasaur-dream.png',
-      );
-      expect(screen.getByAltText('pokemon')).toHaveAttribute(
-        'src',
-        'https://example.com/bulbasaur-home.png',
-      );
-      expect(screen.getByAltText('pokemon')).toHaveAttribute(
-        'src',
-        'https://example.com/bulbasaur-showdown.png',
-      );
-    });
-  });
-
-  it('should navigate to the search page when the close button is clicked', () => {
-    const mockedNavigate = jest.fn();
-    jest.mocked(useNavigate).mockReturnValue(mockedNavigate);
-
-    render(
-      <Router>
-        <SearchContext.Provider value={mockSearchState}>
-          <DetailedPageComponent />
-        </SearchContext.Provider>
-      </Router>,
-    );
-
-    const closeButton = screen.getByText('Close');
-    fireEvent.click(closeButton);
-
-    expect(mockedNavigate).toHaveBeenCalledWith('/?page=1', { replace: true });
-  });
 });

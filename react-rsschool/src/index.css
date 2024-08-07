@@ -150,7 +150,7 @@ h6 {
   padding: 5px 10px;
   border-radius: 10px;
   font-weight: bold;
-  background-color: #ffd4f1;
+  background-color: #f0ade5;
   font-size: 150%;
 }
 .search-button:hover {
@@ -179,6 +179,7 @@ h6 {
   cursor: pointer;
   color: black;
   position: relative;
+  /* background-color: #defaf5; */
 }
 
 .pok-item {
@@ -192,11 +193,12 @@ h6 {
   cursor: pointer;
   color: black;
   position: relative;
+  /* background-color: #defaf5; */
 }
 
 .pokemon-item:hover {
   transform: scale(1.05);
-  background-color: #ffd4f1;
+  background-color: #f0ade5;
   transition: all 0.2s ease-in-out;
 }
 
@@ -230,7 +232,7 @@ h6 {
   padding: 5px 10px;
   border-radius: 10px;
   font-weight: bold;
-  background-color: #ffd4f1;
+  background-color: #f0ade5;
 }
 
 .error-button:hover {
@@ -246,7 +248,7 @@ h6 {
   padding: 5px 10px;
   border-radius: 10px;
   font-weight: bold;
-  background-color: #ffd4f1;
+  background-color: #f0ade5;
 }
 
 .return-button:hover {
@@ -272,7 +274,7 @@ h6 {
   padding: 5px 10px;
   border-radius: 10px;
   font-weight: bold;
-  background-color: #ffd4f1;
+  background-color: #f0ade5;
 }
 
 .pagination-button:hover {
@@ -297,7 +299,7 @@ h6 {
   padding: 5px 10px;
   border-radius: 10px;
   font-weight: bold;
-  background-color: #ffd4f1;
+  background-color: #f0ade5;
   position: absolute;
   right: 10px;
   top: 10px;
@@ -325,7 +327,7 @@ h6 {
   padding: 5px 10px;
   border-radius: 10px;
   font-weight: bold;
-  background-color: #ffd4f1;
+  background-color: #f0ade5;
 }
 
 .notfound-button:hover {
@@ -341,10 +343,71 @@ h6 {
   padding: 5px 10px;
   border-radius: 10px;
   font-weight: bold;
-  background-color: #ffd4f1;
+  background-color: #f0ade5;
 }
 
 .notfound-button:hover {
+  transform: scale(1.2);
+  transition: transform 0.2s ease-in-out;
+}
+
+.flyout-container {
+  position: absolute;
+  top: 65px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  background-color: #f0ade5;
+  border: 2px solid white;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.flyout_buttons {
+  display: flex;
+  gap: 15px;
+}
+.flyout-text {
+  font-weight: bold;
+}
+
+.flyout_button {
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  background-color: rgba(230, 26, 26, 0.4);
+}
+
+.flyout_button:hover {
+  transform: scale(1.2);
+  transition: transform 0.2s ease-in-out;
+}
+
+.light-theme {
+  background-color: #ffd4f1;
+  color: black;
+}
+
+.dark-theme {
+  background-color: #e61a1a;
+  color: #fff;
+}
+
+.button_controls {
+  display: flex;
+  gap: 15px;
+}
+
+.controls_button {
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  background-color: #f0ade5;
+}
+
+.controls_button:hover {
   transform: scale(1.2);
   transition: transform 0.2s ease-in-out;
 }
