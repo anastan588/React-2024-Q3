@@ -1,8 +1,8 @@
 /* eslint-disable react-compiler/react-compiler */
+'use client';
 import { createContext, useEffect, useState } from 'react';
 import { SearchState } from '../types';
-import PokemonListPage from './pokemosListPage';
-import { Outlet } from 'react-router-dom';
+import PokemonList from './pokemosList';
 import { useNavigate } from 'react-router-dom';
 import { pokemonApi } from '../store/ApiSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,7 +11,11 @@ import { RootState } from '../store/store';
 
 export const SearchContext = createContext<SearchState | undefined>(undefined);
 
-function SearchComponent() {
+function SearchComponent({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [statePoki, setState] = useState<SearchState>({
     searchTerm: localStorage.getItem('searchTerm') || '',
     pokemonList: [],
@@ -28,10 +32,6 @@ function SearchComponent() {
   const filteredPokemonList = useSelector(
     (state: RootState) => state.pokemonsData.pokemons,
   );
-
-  // const selectedPokemonList = useSelector(
-  //   (state: RootState) => state.pokemonsData.selectedPokemons,
-  // );
 
   const isLoadingMain = useSelector(
     (state: RootState) => state.pokemonsData.isLoading,
@@ -103,6 +103,7 @@ function SearchComponent() {
     dispatch(initStateLoad(statePoki.loading));
     dispatch(initPageLoad(pageNumber));
     statePoki.pageNumber = pageNumber;
+    localStorage.setItem('pageNumber', statePoki.pageNumber.toString());
     navigate(`/?page=${statePoki.pageNumber}`, { replace: true });
     setTimeout(() => {
       statePoki.loading = false;
@@ -142,10 +143,10 @@ function SearchComponent() {
             </button>
           </div>
           <div className="pokemoms_container">
-            <PokemonListPage filteredPokemonList={filteredPokemonList} />
+            <PokemonList filteredPokemonList={filteredPokemonList} />
             <div className="pokemon-detailed-page">
               <SearchContext.Provider value={statePoki}>
-                <Outlet />
+                {children}
               </SearchContext.Provider>
             </div>
           </div>

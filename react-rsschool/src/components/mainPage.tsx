@@ -1,3 +1,4 @@
+'use client';
 import { useContext, useEffect, useState } from 'react';
 import SearchComponent from './search';
 import { useNavigate } from 'react-router-dom';
@@ -7,7 +8,11 @@ import FlyoutComponent from './flyoutElement';
 import { ThemeContext } from './themeProvider';
 import { pokemonApi } from '../store/ApiSlice';
 
-function MainPageComponent() {
+function MainPageComponent({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [state, setState] = useState({
     errorThrown: false,
@@ -76,7 +81,7 @@ function MainPageComponent() {
         </div>
       </header>
       <main className="main">
-        <SearchComponent />
+        <SearchComponent>{children}</SearchComponent>
         {selectedPokemonList.length !== 0 ? <FlyoutComponent /> : null}
       </main>
       <footer className={`footer ${theme}-theme`}>
