@@ -1,3 +1,4 @@
+'use client';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { cleanSelectedState } from '../store/pokemonSlice';
@@ -18,9 +19,9 @@ const FlyoutComponent = () => {
     for (const pokemon of selectedPokemonList) {
       csvRows.push([
         pokemon.id.toString(),
-        pokemon.name,
-        `${pokemon.abilities
-          .map((el) => el.ability.name)
+        pokemon!.name!,
+        `${pokemon!
+          .abilities!.map((el) => el.ability.name)
           .join(';')
           .toUpperCase()}`,
         `https://pokeapi.co/api/v2/pokemon/${pokemon.id}`,
