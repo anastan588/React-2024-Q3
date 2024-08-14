@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { PokemonDescription } from '../types';
 import { addSelectedState, removeSelectedState } from '../store/pokemonSlice';
-import PokemonListPage from '../components/pokemosListPage';
+import PokemonListPage from '../components/pokemonList.tsx';
 import { MemoryRouter } from 'react-router-dom';
 
 const mockStore = configureStore([]);

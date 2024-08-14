@@ -19,7 +19,7 @@ export const pokemonApi = createApi({
         if (searchTerm === '') {
           return `pokemon?limit=30&offset=${pageNumber}`;
         } else {
-          return `pokemon?search=${searchTerm}&limit=60&offset=${pageNumber}`;
+          return `pokemon?search=${searchTerm}&limit=30&offset=${pageNumber}`;
         }
       },
     }),

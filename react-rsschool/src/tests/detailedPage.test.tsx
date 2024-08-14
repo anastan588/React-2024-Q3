@@ -6,7 +6,7 @@ import configureStore from 'redux-mock-store';
 
 import { pokemonApi } from '../store/ApiSlice';
 import { SearchContext } from '../components/search';
-import DetailedPageComponent from '../components/detailedPage';
+import DetailedPageComponent from '../app/details/detailedPage';
 import { MockStateTest } from '../types';
 
 jest.mock('../store/ApiSlice', () => ({
