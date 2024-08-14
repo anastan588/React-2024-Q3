@@ -1,5 +1,4 @@
 /* eslint-disable react-refresh/only-export-components */
-/* eslint-disable react-compiler/react-compiler */
 
 import { useEffect } from 'react';
 import { Pokemon, PokemonDescription, SearchState } from '../../types';
@@ -8,47 +7,41 @@ import { SearchContext } from '../../components/search';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-export async function getStaticProps({ params }: { params: { id: string } }) {
-  // Fetch the details of the specific Pokemon
+export async function getPokemon({ params }: { params: { id: string } }) {
   const response = await fetch(
     `https://pokeapi.co/api/v2/pokemon/${params.id}`,
   );
   const pokemonData: PokemonDescription = await response.json();
-
   console.log(pokemonData);
-  return {
-    props: {
-      pokemonData,
-    },
-  };
+  return pokemonData;
 }
 
-export async function getStaticPaths() {
-  // Fetch the list of all Pokemon IDs
+export async function generateStaticParams() {
   const searchTerm = localStorage.getItem('searchTerm') || '';
   const pageNumber = Number(localStorage.getItem('pageNumber')) || 1;
   const response = await fetch(
     `https://pokeapi.co/api/v2/pokemon?search=${searchTerm}&limit=30&offset=${pageNumber}`,
   );
   const pokemons: Pokemon[] = await response.json();
-  // Generate the paths for each Pokemon ID
   const paths = pokemons.map((pokemon: Pokemon) => ({
-    params: { id: pokemon.url.slice(-2, -1) },
+    params: { id: pokemon.url.split('/')[pokemon.url.split('/').length - 1] },
   }));
-
-  return {
-    paths,
-    fallback: true,
-  };
+  return paths.map((path) => ({
+    id: path,
+  }));
+  // return {
+  //   paths,
+  //   fallback: true,
+  // };
 }
 
-function Detail({ pokemonData }: { pokemonData: PokemonDescription }) {
+async function Page() {
   const router = useRouter();
   const { id } = router.query as { id: string };
   console.log(id);
   // const navigate = useNavigate();
   const state = useContext(SearchContext) as SearchState;
-
+  const pokemonData = await getPokemon({ params: { id: id } });
   // const useGetPokemonByIdQuery = pokemonApi.endpoints.getPokemonById.useQuery(
   //   id.toString(),
   // );
@@ -156,4 +149,4 @@ function Detail({ pokemonData }: { pokemonData: PokemonDescription }) {
   );
 }
 
-export default Detail;
+export default Page;

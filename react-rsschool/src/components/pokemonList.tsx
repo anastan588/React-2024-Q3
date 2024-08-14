@@ -61,7 +61,7 @@ function PokemonList({
     pokemon: PokemonDescription,
   ) => {
     event.preventDefault();
-    console.log(pokemon);
+
     const target = event.target as HTMLElement;
     if (target.classList.contains('pokemon-selected')) {
       // Cancel the navigation
@@ -75,7 +75,11 @@ function PokemonList({
       <div className="pokemon-list">
         {pokemonListForRender.map((pokemon) => (
           <Link
-            href={`/details/${pokemon.id}`}
+            href={{
+              pathname: '/details/[id]',
+              query: { id: pokemon.id },
+            }}
+            as={`/details/${pokemon.id}`}
             key={pokemon.id}
             onClick={(event) => handleLinkClick(event, pokemon)}
           >

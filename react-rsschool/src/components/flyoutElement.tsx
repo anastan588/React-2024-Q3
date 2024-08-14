@@ -20,8 +20,8 @@ const FlyoutComponent = () => {
       csvRows.push([
         pokemon.id.toString(),
         pokemon!.name!,
-        `${pokemon!.abilities!
-          .map((el) => el.ability.name)
+        `${pokemon!
+          .abilities!.map((el) => el.ability.name)
           .join(';')
           .toUpperCase()}`,
         `https://pokeapi.co/api/v2/pokemon/${pokemon.id}`,

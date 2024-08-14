@@ -8,11 +8,7 @@ import FlyoutComponent from './flyoutElement';
 import { ThemeContext } from './themeProvider';
 import { pokemonApi } from '../store/ApiSlice';
 
-function MainPageComponent({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function MainPageComponent({ children }: { children: React.ReactNode }) {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [state, setState] = useState({
     errorThrown: false,

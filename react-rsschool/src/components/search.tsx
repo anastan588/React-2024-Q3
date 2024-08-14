@@ -2,7 +2,7 @@
 'use client';
 import { createContext, useEffect, useState } from 'react';
 import { SearchState } from '../types';
-import PokemonList from './pokemosList';
+import PokemonList from './pokemonList.tsx';
 import { useNavigate } from 'react-router-dom';
 import { pokemonApi } from '../store/ApiSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,11 +11,7 @@ import { RootState } from '../store/store';
 
 export const SearchContext = createContext<SearchState | undefined>(undefined);
 
-function SearchComponent({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function SearchComponent({ children }: { children: React.ReactNode }) {
   const [statePoki, setState] = useState<SearchState>({
     searchTerm: localStorage.getItem('searchTerm') || '',
     pokemonList: [],

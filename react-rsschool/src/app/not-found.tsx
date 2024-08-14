@@ -6,7 +6,9 @@ function NotFound() {
     <>
       <div className="notfound-container">
         <h1 className="notfound-title">Page not found</h1>
-        <Link className="notfound-button" href="/">Main page</Link>
+        <Link className="notfound-button" href="/">
+          Main page
+        </Link>
       </div>
     </>
   );
